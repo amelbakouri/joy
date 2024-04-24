@@ -1,0 +1,96 @@
+.placeholder::placeholder {
+    color: #6D6875 !important;
+}
+
+.post {
+    border: none;
+}
+
+/* séparation entre les cartes */
+.post+.post {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    margin-top: -1px;
+}
+
+.navbar {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.card {
+    --bs-card-border-color: none;
+    --bs-card-bg: none;
+}
+
+.param {
+    border: none;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* la séparation entre les cartes */
+.param+.param {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    margin-top: -1px;
+}
+
+.modalStyle {
+    display: none !important;
+    position: fixed !important;
+    z-index: 5 !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    overflow: auto !important;
+    background-color: rgba(0, 0, 0, 0.4) !important;
+}
+
+.close {
+    color: #aaa !important;
+    float: right !important;
+    font-size: 28px !important;
+    font-weight: bold !important;
+}
+
+.close:hover,
+.close:focus {
+    color: black !important;
+    text-decoration: none !important;
+    cursor: pointer !important;
+}
+
+.myModal-content {
+    margin: auto;
+    margin-top: 13%;
+    max-width: 415px;
+    width: 100%;
+}
+
+.loginModal {
+    margin: auto;
+    margin-top: 10%;
+    max-width: 35rem;
+    width: 100%;
+}
+
+.registerModal {
+    margin: auto;
+    max-width: 35rem;
+    width: 100%;
+}
+
+#registration-card {
+    margin-top: 4% !important;
+    max-width: 35rem;
+}
+
+.modal-header {
+    border: none;
+}
+
+.modal-footer {
+    border: none;
+}
+
