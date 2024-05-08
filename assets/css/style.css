@@ -1,3 +1,12 @@
+* {
+    font-family: "Roboto", sans-serif;
+    color: #6D6875 !important;
+}
+
+.navbar {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
 .placeholder::placeholder {
     color: #6D6875 !important;
 }
@@ -6,14 +15,12 @@
     border: none;
 }
 
-/* séparation entre les cartes */
-.post+.post {
+/* Ajouter une séparation entre les cartes des posts */
+.card.post:not(:first-child) {
     border-top: 1px solid rgba(0, 0, 0, 0.1);
-    margin-top: -1px;
-}
-
-.navbar {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    /* Ajoute une bordure supérieure */
+    margin-top: 20px;
+    /* Espacement entre les cartes */
 }
 
 .card {
@@ -82,7 +89,7 @@
 }
 
 #registration-card {
-    margin-top: 4% !important;
+    margin-top: 3% !important;
     max-width: 35rem;
 }
 
@@ -94,3 +101,65 @@
     border: none;
 }
 
+.icon-post {
+    font-size: 20px;
+}
+
+#commentaireModal {
+    margin-top: 18vh;
+}
+
+#commentModal .comment-list {
+    max-height: 300px;
+    /* hauteur maximale */
+    overflow-y: auto;
+    /* barre de défilement verticale si besoin */
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    /* Largeur de la barre de défilement */
+}
+
+/* Style de la poignée de la barre de défilement */
+::-webkit-scrollbar-thumb {
+    background-color: #888;
+    /* Couleur de la poignée */
+    border-radius: 5px;
+    /* Coins arrondis */
+}
+
+/* Style de la piste de la barre de défilement */
+::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+    /* Couleur de la piste */
+    border-radius: 5px;
+    /* Coins arrondis */
+}
+
+/* Désactiver le style de focus Bootstrap pour l'input de recherche */
+#navbarSupportedContent input[type="search"]:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+input[type="text"]:focus {
+    outline: none;
+    box-shadow: none;
+    border: none;
+}
+
+/* CSS personnalisé */
+.sidebar {
+    height: 100vh;
+    /* Hauteur maximale égale à la hauteur de la fenêtre */
+    overflow-y: auto;
+    /* Activation de la barre de défilement verticale si nécessaire */
+}
+
+.admin {
+    height: 100vh;
+    /* Hauteur maximale égale à la hauteur de la fenêtre */
+    overflow-y: auto;
+    /* Activation de la barre de défilement verticale si nécessaire */
+}

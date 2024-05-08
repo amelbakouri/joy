@@ -4,10 +4,11 @@ require_once dirname(__DIR__) . '/function/generic.php';
 require_once dirname(__DIR__) . '/config/connexion.php';
 
 if (isset($_POST['connexion'])) {
-    if (!empty($_POST['pseudo']) and !empty($_POST['password'])) {
-        $pseudo = sanitizeInput($_POST['pseudo']);
-        $password = $_POST['password'];
+    if (!empty($_POST['loginPseudo']) and !empty($_POST['loginPassword'])) {
+        $pseudo = htmlspecialchars($_POST['loginPseudo']);
+        $password = $_POST['loginPassword'];
         $recupUser = request($conn, "SELECT * FROM user WHERE pseudo = '$pseudo'");
+
 
         if ($recupUser->rowCount() > 0) {
             $user = $recupUser->fetch();
@@ -15,11 +16,17 @@ if (isset($_POST['connexion'])) {
             if (password_verify($password, $user['password'])) {
                 $_SESSION['pseudo'] = $pseudo;
                 $_SESSION['id'] = $user['id'];
-                $_SESSION['password'] = $user['password'];
+                $_SESSION['role'] = $user['role'];
 
-                // Redirection vers la page d'accueil
-                header('Location: /');
-                exit(); // Assure que le script s'arrête après la redirection
+
+                // Vérification du rôle pour l'accès à la page d'administration
+                if ($_SESSION['role'] == 'moderateur') {
+                    // Redirection vers la page d'administration
+                    redirectTo('/admin/dashboard');
+                } else {
+                    // Redirection vers la page d'accueil
+                    redirectTo('/');
+                }
             } else {
                 echo 'Votre mot de passe est incorrect';
             }

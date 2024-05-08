@@ -8,13 +8,16 @@
 
             <div class="card-body">
                 <!-- à faire action="" -->
-                <form method="POST" action="/php/db.php">
-                <input type="hidden" name="form_name" value="deleteAccount">
+                <form method="POST" action="/db/account.php">
+                    <input type="hidden" name="form_name" value="deleteAccount">
                     <div class="row mb-4">
                         <div class="col-sm-12">
                             <div class="form-group">
+                                <!-- Champ de nom d'utilisateur caché pour l'accessibilité -->
+                                <input type="hidden" name="username" value="<?= $_SESSION['pseudo'] ?>">
+
                                 <label for="password">Mot de passe :</label>
-                                <input id="password" name="passwordVerify" class="form-control bg-light-pink" type="password" required>
+                                <input id="password" name="passwordVerify" class="form-control bg-light-pink" type="password" autocomplete="new-password" required>
                             </div>
                         </div>
                     </div>

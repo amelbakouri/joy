@@ -4,15 +4,15 @@ require_once dirname(__DIR__) . '/function/generic.php';
 require_once dirname(__DIR__) . '/config/connexion.php';
 
 if (isset($_POST['inscription'])) {
-    $pseudo = sanitizeInput($_POST['pseudo']);
-    $name = sanitizeInput($_POST['name']);
-    $lname = sanitizeInput($_POST['lname']);
-    $email = sanitizeInput($_POST['email']);
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-    $confirmPassword = $_POST['confirmPassword'];
+    $pseudo = htmlspecialchars($_POST['pseudo']);
+    $name = htmlspecialchars($_POST['name']);
+    $lname = htmlspecialchars($_POST['lname']);
+    $email = htmlspecialchars($_POST['email']);
+    $password = password_hash($_POST['newPassword'], PASSWORD_DEFAULT);
+    $confirmPassword = $_POST['confirmNewPassword'];
 
     // Vérifier si les mots de passe correspondent
-    if ($_POST['password'] !== $confirmPassword) {
+    if ($_POST['newPassword'] !== $confirmPassword) {
         echo '<script>alert("Les mots de passe ne correspondent pas."); window.location.href = "/login.php";</script>';
         exit(); // Arrêter le script
     }
@@ -24,13 +24,23 @@ if (isset($_POST['inscription'])) {
         echo '<script>alert("Le pseudo est déjà pris."); window.location.href = "/login.php";</script>';
     } else {
         // Vérifier si l'e-mail existe déjà
-        $existingEmail = request($conn, "SELECT * FROM user WHERE email = '$email'", );
+        $existingEmail = request($conn, "SELECT * FROM user WHERE email = '$email'",);
 
         if ($existingEmail->rowCount() > 0) {
             echo '<script>alert("L\'e-mail existe déjà."); window.location.href = "/login.php";</script>';
         } else {
             // Inscription de l'utilisateur
-            request($conn, "INSERT INTO user (pseudo, name, lname, email, password) VALUES ('$pseudo', '$name', '$lname', '$email', '$password')");
+            // Données à insérer
+            $data = array(
+                'pseudo' => $pseudo,
+                'name' => $name,
+                'lname' => $lname,
+                'email' => $email,
+                'password' => $password
+            );
+
+            // Appel de la fonction insertData
+            insertData($conn, 'user', $data);
 
             // Récupération de l'utilisateur enregistré
             $recupUser = request($conn, "SELECT * FROM user WHERE pseudo = '$pseudo'");
@@ -38,7 +48,6 @@ if (isset($_POST['inscription'])) {
             if ($recupUser->rowCount() > 0) {
                 $user = $recupUser->fetch();
                 $_SESSION['pseudo'] = $user['pseudo'];
-                $_SESSION['password'] = $user['password'];
                 $_SESSION['id'] = $user['id'];
                 // Redirection vers la page d'accueil
                 header('Location: /');

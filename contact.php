@@ -1,7 +1,6 @@
 <?php
 require_once 'utilities/head.php';
 require_once 'utilities/nav.php';
-require_once 'authentification/auth.php';
 ?>
 
 <div class="container mt-5 mb-5 d-flex justify-content-center">

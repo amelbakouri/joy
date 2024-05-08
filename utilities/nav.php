@@ -1,3 +1,8 @@
+<?php
+require_once 'authentification/auth.php';
+$userID = $_SESSION['id'];
+?>
+
 <body>
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg">
@@ -13,14 +18,16 @@
       <!-- Contenu de la barre de navigation -->
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <!-- Barre de recherche -->
-        <form class="d-flex ms-auto" action="/php/search.php" method="GET">
+        <form class="d-flex ms-auto" action="index.php" method="GET">
           <div class="input-group bg-dark-pink rounded-pill">
-            <input type="search" class="form-control  bg-dark-pink border-0 rounded-pill" placeholder="Rechercher" name="query">
+            <input type="search" class="form-control bg-dark-pink border-0 rounded-pill" placeholder="Rechercher" name="query" value="<?php echo isset($_GET['query']) ? htmlspecialchars($_GET['query']) : ''; ?>">
             <button class="btn bg-dark-pink border-0 rounded-pill color-grey" type="submit">
               <i class="bi bi-search"></i> <!-- Icône de loupe -->
             </button>
           </div>
         </form>
+
+
 
         <!-- Liens à droite -->
         <ul class="navbar-nav ms-auto me-5">
@@ -33,6 +40,13 @@
           <li class="nav-item">
             <a class="nav-link mx-2 pe-2 roboto-medium fs-5" href="profil">Profil</a>
           </li>
+          <?php
+          if ($_SESSION['role'] == 'moderateur') {
+            echo "<li class='nav-item'>
+            <a class='nav-link mx-2 pe-2 roboto-medium fs-5' href='/admin/dashboard'>Dashboard</a>
+          </li>";
+          }
+          ?>
         </ul>
       </div>
     </div>

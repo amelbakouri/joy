@@ -12,8 +12,8 @@ require_once 'utilities/head.php';
 ?>
 
 <?php
-require_once 'utilities/components/inscriptionForm.php';
-require_once 'utilities/components/connexionForm.php';
+require_once 'utilities/components/account/inscriptionForm.php';
+require_once 'utilities/components/account/connexionForm.php';
 ?>
 
 

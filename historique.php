@@ -1,7 +1,6 @@
 <?php
 require_once 'utilities/head.php';
 require_once 'utilities/nav.php';
-require_once 'authentification/auth.php';
 require_once 'function/generic.php';
 $userID = $_SESSION['id'];
 ?>
@@ -26,16 +25,16 @@ $userID = $_SESSION['id'];
                         <div class="d-flex justify-content-between align-items-center mt-2">
                             <div></div>
                             <div>
-                                <button type="button" class="btn me-2" data-bs-toggle="modal" data-bs-target="#editModal<?php echo $postID ?>"><i class="fas fa-edit"></i></button> <!-- Icône de modification -->
-                                <button type="button" class="btn me-2" data-bs-toggle="modal" data-bs-target="#confirmationModal<?php echo $postID ?>"><i class="fas fa-trash-alt"></i></button> <!-- Icône de suppression -->
+                                <button type="button" class="btn me-2" data-bs-toggle="modal" data-bs-target="#editModal<?= $postID ?>"><i class="fas fa-edit"></i></button> <!-- Icône de modification -->
+                                <button type="button" class="btn me-2" data-bs-toggle="modal" data-bs-target="#confirmationModal<?= $postID ?>"><i class="fas fa-trash-alt"></i></button> <!-- Icône de suppression -->
                             </div>
                         </div>
                     </div>
                 </div>
                 
                 <?php
-                require 'utilities/components/deletePost.php'; // Modal de suppression
-                require 'utilities/components/modifPost.php'; // Modal de modification
+                require 'utilities/components/post/deletePost.php'; // Modal de suppression
+                require 'utilities/components/post/modifPost.php'; // Modal de modification
                 
                 ?>
         <?php

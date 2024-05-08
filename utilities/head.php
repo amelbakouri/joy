@@ -10,7 +10,8 @@ $titles = array(
     "contact.php" => "Joy - Contactez nous",
     "historique.php" => "Joy - Historique de posts",
     "informations.php" => "Joy - Modification d'informations",
-    "login.php" => "Joy - Login"
+    "login.php" => "Joy - Login",
+    "/admin/dashboard.php" => "Joy - Dashboard"
 );
 
 // Récupération du nom du fichier demandé
@@ -37,6 +38,9 @@ $title = isset($titles[$current_page]) ? $titles[$current_page] : "Joy";
     <script defer src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"></script>
 
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
     <!-- CSS Custom -->
     <link rel="stylesheet" href="/assets/css/style.css">
@@ -48,8 +52,11 @@ $title = isset($titles[$current_page]) ? $titles[$current_page] : "Joy";
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-..." crossorigin="anonymous">
 
-    <!-- JS personnel -->
-    <script defer src="/js/toast.js"></script>
+    <!-- favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
 
     <!-- Insérer le titre dynamique -->
     <title><?php echo $title; ?></title>

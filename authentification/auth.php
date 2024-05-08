@@ -21,8 +21,8 @@ if (isset($_SESSION['last_activity'])) {
         // Détruit toutes les données de session
         session_unset();
         session_destroy();
-        // Redirige vers la page d'accueil
-        header('Location: /');
+        // Redirige vers la page de connexion
+        header('Location: /login.php');
         exit(); // Assure que le script s'arrête après la redirection
     }
 }

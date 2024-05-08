@@ -1,9 +1,7 @@
 <?php
 require_once 'utilities/head.php';
 require_once 'utilities/nav.php';
-require_once 'authentification/auth.php';
 require_once 'function/generic.php';
-$userID = $_SESSION['id'];
 $user = requestOne($conn, "SELECT pseudo, name, lname, email FROM user WHERE id = $userID");
 
 // On appelle $user->name, parce que c'est un tableau d'objet de type stdclass et on recupere donc chaque donnée avec l'operateur ->
@@ -15,7 +13,7 @@ $user = requestOne($conn, "SELECT pseudo, name, lname, email FROM user WHERE id 
         <div class="card-body">
             <h4 class="mb-4 text-center">Modifier vos informations</h4>
 
-            <form method="POST" action="/php/db.php">
+            <form method="POST" action="/db/account.php">
                 <input type="hidden" name="form_name" value="informations">
                 <div class="row mb-4">
                     <div class="col-sm-6">

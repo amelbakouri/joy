@@ -10,7 +10,7 @@
                 Êtes-vous sûr de vouloir supprimer ce post ?
             </div>
             <div class="modal-footer">
-                <form method="POST" action="/php/db.php">
+                <form method="POST" action="/db/post.php">
                     <input type="hidden" name="form_name" value="deletePost">
                     <input type="hidden" name="postID" value="<?php echo $postID; ?>">
                     <button type="submit" class="btn bg-logo-color color-light-pink d-block mx-auto" data-bs-dismiss="modal">Supprimer</button>

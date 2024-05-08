@@ -8,7 +8,7 @@
                     <div class="col-sm-12 mt-4">
                         <div class="form-group">
                             <label for="pseudo">Pseudo :</label>
-                            <input id="pseudo" name="pseudo" class="form-control bg-light-pink" type="text" placeholder="johnD">
+                            <input id="loginPseudo" name="loginPseudo" class="form-control bg-light-pink" type="text" autocomplete="username" placeholder="johnD">
                         </div>
                     </div>
                 </div>
@@ -16,16 +16,16 @@
                 <div class="col-sm-12">
                     <div class="form-group">
                         <label for="password">Mot de passe :</label>
-                        <input id="password" name="password" class="form-control bg-light-pink" type="password" placeholder="*******">
+                        <input id="loginPassword" name="loginPassword" class="form-control bg-light-pink" type="password" autocomplete="current-password" placeholder="*******">
                     </div>
                 </div>
 
                 <div class="row justify-content-center mt-3">
-                <button name="connexion" class="w-30 btn bg-logo-color color-light-pink btn-block ">Se connecter</button>
+                    <button name="connexion" class="w-30 btn bg-logo-color color-light-pink btn-block ">Se connecter</button>
                 </div>
             </form>
 
-            <p class="d-flex justify-content-center mt-3">Vous n'avez pas de compte ? <a href="#" class="color-logo" id="register-link">S'inscrire</a></p>
+            <p class="d-flex justify-content-center mt-3">Vous n'avez pas de compte ? &nbsp; <a href="#" class="color-logo" id="register-link">S'inscrire</a></p>
 
         </div>
     </div>

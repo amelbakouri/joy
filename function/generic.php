@@ -1,11 +1,5 @@
 <?php
 
-// Évite les injections de code dans les inputs
-function sanitizeInput($input)
-{
-    return htmlspecialchars(addslashes($input));
-}
-
 function requestOne($conn, $request)
 {
     // Vérifie si la connexion à la base de données est valide
@@ -27,7 +21,6 @@ function requestOne($conn, $request)
         return "DB :: Merci de vérifier l'accès à votre base de données.";
     }
 }
-
 
 function request($conn, $request)
 {
@@ -56,7 +49,29 @@ function request($conn, $request)
     }
 }
 
+// Fonction d'insertion générique
+function insertData($conn, $table, $data)
+{
 
+    // Création de la chaîne de paramètres pour la requête
+    $fields = implode(', ', array_keys($data));
+    $placeholders = ':' . implode(', :', array_keys($data));
+
+    // Requête préparée
+    $stmt = $conn->prepare("INSERT INTO $table ($fields) VALUES ($placeholders)");
+
+    // Liaison des paramètres
+    foreach ($data as $key => &$value) {
+        $stmt->bindParam(":$key", $value);
+    }
+    
+    // Exécution de la requête
+    if ($stmt->execute()) { // Exécute la requête préparée
+        return true; // Retourne vrai si l'exécution réussit
+    } else {
+        return false; // Retourne faux si l'exécution échoue
+    }
+}
 
 function redirectTo($location)
 {

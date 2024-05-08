@@ -1,8 +1,3 @@
-* {
-    font-family: "Roboto", sans-serif;
-    color: #6D6875 !important;
-}
-
 a {
     text-decoration: none;
     color: inherit;
@@ -45,11 +40,15 @@ body {
 }
 
 .color-logo {
-    color: #df878a !important;
+    color: #dd7d81 !important;
 }
 
 .color-grey {
     color: #6D6875 !important;
+}
+
+.border-grey{
+    border-color: #6d687554;
 }
 
 .roboto-medium {
