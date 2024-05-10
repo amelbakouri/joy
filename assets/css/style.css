@@ -163,3 +163,13 @@ input[type="text"]:focus {
     overflow-y: auto;
     /* Activation de la barre de défilement verticale si nécessaire */
 }
+
+.replies {
+    display: none !important;
+    /* Par défaut, masquer les réponses */
+}
+
+.replies.replies-visible {
+    display: block !important;
+    /* Afficher les réponses lorsque la classe replies-visible est présente */
+}

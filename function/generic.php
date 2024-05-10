@@ -64,7 +64,7 @@ function insertData($conn, $table, $data)
     foreach ($data as $key => &$value) {
         $stmt->bindParam(":$key", $value);
     }
-    
+
     // Exécution de la requête
     if ($stmt->execute()) { // Exécute la requête préparée
         return true; // Retourne vrai si l'exécution réussit
@@ -73,8 +73,35 @@ function insertData($conn, $table, $data)
     }
 }
 
+// Fonction de redirection
 function redirectTo($location)
 {
     header("Location: $location");
     exit();
+}
+
+// Affiche le temps écoulé depuis la publication
+function temps_ecoule($date)
+{
+    date_default_timezone_set('Europe/Paris');
+
+    $temps_actuel = time();
+
+    $temps = strtotime($date);
+
+    $difference = $temps_actuel - $temps;
+
+    // Convertir la différence en temps plus convivial
+    if ($difference < 60) {
+        return "Il y a quelques instants";
+    } elseif ($difference < 3600) {
+        $minutes = round($difference / 60);
+        return "$minutes m";
+    } elseif ($difference < 86400) {
+        $heures = round($difference / 3600);
+        return "$heures h";
+    } else {
+        $jours = round($difference / 86400);
+        return "$jours j";
+    }
 }

@@ -12,6 +12,7 @@ function getComments($conn, $postID)
         // Ajouter chaque commentaire avec le pseudo au tableau
         $commentList[] = [
             'commentaire' => $row['commentaire'],
+            'date' => $row['date'],
             'commentID' => $row['commentID'],
             'pseudo' => $row['pseudo']
         ];
@@ -36,42 +37,20 @@ function getCommentCount($conn, $postID)
     $stmt = $conn->prepare("SELECT COUNT(*) AS comment_count FROM commentaires WHERE postID = ?");
     $stmt->execute([$postID]);
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    return $result['comment_count'];
+    $comm = $result['comment_count'];
+
+    $stmt = $conn->prepare("SELECT COUNT(*) AS reply_count FROM replies WHERE postID = ?");
+    $stmt->execute([$postID]);
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $reply = $result['reply_count'];
+
+    $total = $comm + $reply;
+    return $total;
 }
-
-// Affiche le temps écoulé depuis la publication
-function temps_ecoule($date_publication)
-{
-    date_default_timezone_set('Europe/Paris');
-
-    $temps_actuel = time();
-
-    $temps_publication = strtotime($date_publication);
-
-    $difference = $temps_actuel - $temps_publication;
-
-    // Convertir la différence en temps plus convivial
-    if ($difference < 60) {
-        return "Il y a quelques instants";
-    } elseif ($difference < 3600) {
-        $minutes = round($difference / 60);
-        return "$minutes m";
-    } elseif ($difference < 86400) {
-        $heures = round($difference / 3600);
-        return "$heures h";
-    } else {
-        $jours = round($difference / 86400);
-        return "$jours j";
-    }
-}
-
 
 function getReplies($conn, $commentID)
 {
     $replies = array();
-
-    // echo "Comment ID: " . $commentID; // Cette instruction d'écho est en commentaire
-    // echo "Nombre de réponses trouvées: " . $stmt->rowCount(); // Cette instruction d'écho est en commentaire
 
     // Requête SQL pour récupérer les réponses à partir de la base de données
     $query = "SELECT * FROM replies AS r JOIN user ON r.userID = user.id WHERE commentID = :commentID";
@@ -81,7 +60,6 @@ function getReplies($conn, $commentID)
 
     // Parcours des résultats de la requête et construction du tableau de réponses
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        // var_dump($row); // Cette instruction de var_dump est en commentaire
 
         $reply = array(
             'id' => $row['id'],
@@ -93,8 +71,6 @@ function getReplies($conn, $commentID)
         );
         $replies[] = $reply;
     }
-
-    // var_dump($replies); // Cette instruction de var_dump est en commentaire
 
     return $replies;
 }

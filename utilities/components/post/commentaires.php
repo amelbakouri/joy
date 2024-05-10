@@ -15,9 +15,10 @@
                     <div class="input-group mb-3">
                         <input type="text" class="form-control bg-light-pink border-0" id="commentText" placeholder="Ajouter un commentaire">
                         <input type="hidden" id="userPseudo" value="<?= $_SESSION['pseudo'] ?>">
+                        <input type="hidden" class="replyToCommentID" value="' + comment.commentID + '">
                         <button class="btn bg-light-pink" type="submit"><i class="fa fa-paper-plane"></i></button>
                     </div>
-                    <input type="hidden" name="postID" value="<?php echo $postID; ?>"> <!-- Champ caché pour stocker l'ID du post -->
+                    <input type="hidden" name="postID" value="postID"> <!-- Champ caché pour stocker l'ID du post -->
                 </form>
             </div>
         </div>

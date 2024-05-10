@@ -23,7 +23,7 @@ $title = isset($titles[$current_page]) ? $titles[$current_page] : "Joy";
 ?>
 
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr-FR">
 
 <head>
     <meta charset="UTF-8">
@@ -56,7 +56,8 @@ $title = isset($titles[$current_page]) ? $titles[$current_page] : "Joy";
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon/android-chrome-192x192.png">
+    <link rel="manifest" href="/assets/favicon/site.webmanifest">
 
     <!-- Insérer le titre dynamique -->
     <title><?php echo $title; ?></title>
