@@ -50,6 +50,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     exit();
                 }
                 break;
+            case "updateRole":
+                // Mettre à jour le rôle de l'utilisateur
+                if (isset($_POST['user_id']) && isset($_POST['role'])) {
+                    $user_id = $_POST['user_id'];
+                    $role = $_POST['role'];
+
+                    // Assurez-vous que le rôle est valide pour éviter les failles de sécurité
+                    $validRoles = ['utilisateur', 'moderateur'];
+                    if (in_array($role, $validRoles)) {
+                        request($conn, "UPDATE `user` SET `role` = '$role' WHERE `id` = $user_id");
+                        redirectTo("/admin/dashboard.php");
+                    } else {
+                        // Gérer l'erreur si le rôle n'est pas valide
+                        echo '<script>alert("Le rôle sélectionné n\'est pas valide."); window.location.href = "/admin/dashboard.php";</script>';
+                        exit();
+                    }
+                } else {
+                    // Gérer l'erreur si les données du formulaire sont manquantes
+                    echo '<script>alert("Données manquantes pour mettre à jour le rôle."); window.location.href = "/admin/dashboard.php";</script>';
+                    exit();
+                }
+                break;
         }
     }
 }

@@ -74,3 +74,4 @@ function getReplies($conn, $commentID)
 
     return $replies;
 }
+

@@ -1,5 +1,6 @@
 $(document).ready(function () {
     var replyToCommentID = null; // Variable pour stocker l'ID du commentaire auquel l'utilisateur répond
+    const likeButtons = document.querySelectorAll('.like-button');
 
     // Gére l'ouverture de la modal des commentaires
     $('.comment-button').click(function () {
@@ -42,7 +43,7 @@ $(document).ready(function () {
 
     $(document).on('click', '.reply-button', function () {
         var commentID = $(this).closest('.comment').data('comment-id'); // Recherche l'élément parent le plus proche qui a la classe CSS "comment"et récupère la valeur de l'attribut de données HTML "comment-id" de l'élément trouvé précédemment et l'assigne à la variable commentID.
-        var pseudo = $(this).siblings('.pseudo').text(); // Sélectionne tous les éléments qui sont des frères de l'élément actuel et qui ont la classe CSS "pseudo" et récupère le contenu texte de l'élément trouvé précédemment et l'assigne à la variable pseudo.
+        var pseudo = $(this).closest('.comment').find('.soupe .pseudo').text(); // Sélectionne tous les éléments qui sont des frères de l'élément actuel et qui ont la classe CSS "pseudo" et récupère le contenu texte de l'élément trouvé précédemment et l'assigne à la variable pseudo.
         replyToCommentID = commentID; // Stock l'ID du commentaire auquel l'utilisateur répond
         $('#replyToCommentID').val(commentID); // Actualise le champ caché avec l'ID du commentaire
         $('#commentText').val('@' + pseudo + ' '); // Pré-rempli le champ de commentaire avec le pseudo de l'auteur du commentaire
@@ -98,7 +99,7 @@ $(document).ready(function () {
                         '<form class="reply-form">' +
                         '<input type="hidden" class="replyToCommentID" value="' + response.commentID + '">' +
                         '<input type="text" class="form-control bg-light-pink reply-text" placeholder="Répondre au commentaire">' +
-                        '<button class="btn bg-light-pink reply-submit" type="submit"><i class="fa fa-paper-plane"></i></button>' +
+                        '<button class="btn bg-light-pink reply-submit" type="submit" data-comment-id="' + response.commentID + '"><i class="fa fa-paper-plane"></i></button>' +
                         '</form>' +
                         '</div>' +
                         '</div>' +
@@ -186,14 +187,23 @@ $(document).ready(function () {
                     // Parcourir la liste des commentaires et construire le HTML
                     for (var i = 0; i < commentList.length; i++) {
                         var comment = commentList[i];
-                        commentHTML += '<div class="comment py-3 " data-comment-id="' + comment.commentID + '">' +
-                            '<span class="pseudo">' + comment.pseudo + ': </span>' +
-                            '<span class="commentaire">' + comment.commentaire + '</span>' +
-                            '<button class="reply-button btn border-0">Répondre</button>';
+                        commentHTML += '<div class="py-3 comment" data-comment-id="' + comment.commentID + '">' +
+                            '<div class="d-flex soupe ">' +
+                            '<p class="pseudo fw-bold m-0 p-0">' + comment.pseudo + ': &nbsp </p>' +
+                            '<p class="commentaire m-0 p-0 w-50">' + comment.commentaire + '</p>' +
+                            '<button type="button" class="btn p-0 icon-post border-0 like-button"> <i class="fas fa-heart"></i>' +
+                            '</div>' +
+                            '<div class="d-flex text-center">' +
+                            '<p class="temps-ecoule p-0 m-0">' + comment.tempsEcoule + '</p>' +
+                            '<p class=" p-0 m-0 ms-2">' + '420 likes' + '</p>' +
+                            '<button class="reply-button btn border-0 p-0 ms-2">Répondre</button>' +
+                            '</div>';
 
                         // Vérifier s'il y a des réponses pour ce commentaire
                         if (comment.hasReplies) {
+                            commentHTML += '<span class="d-inline-block" style=" width: 30px; border-top: 2px solid #6D6875; margin-right: 5px; margin-bottom: 3px !important;"></span>'; // Mini ligne horizontale
                             commentHTML += '<button class="btn border-0 show-replies" data-comment-id="' + comment.commentID + '" >Afficher les réponses</button>';
+
                         }
 
                         commentHTML += '<div class="reply-form" style="display: none;">' +
@@ -250,4 +260,43 @@ $(document).ready(function () {
             }
         });
     }
+
+    $(document).on('click', '.like-button', function () {
+        var commentID = $(this).closest('.comment').data('comment-id'); // Récupérer l'ID du commentaire
+        var likeButton = $(this); // Stocker une référence à $(this)
+    
+        // Vérifier si l'utilisateur a déjà liké ce commentaire
+        var isLiked = likeButton.hasClass('liked');
+    
+        // Envoyer une requête AJAX pour ajouter ou supprimer le like
+        $.ajax({
+            type: 'POST',
+            url: '/db/commentaire.php',
+            data: {
+                form_name: 'like_comment',
+                commentID: commentID,
+                action: isLiked ? 'unlike' : 'like' // Si déjà liké, action est "unlike", sinon c'est "like"
+            },
+            success: function (response) {
+                if (response.success) {
+                    // Mettre à jour l'apparence du bouton de like en utilisant la référence stockée
+                    if (isLiked) {
+                        // Si déjà liké, enlever la classe 'liked'
+                        likeButton.removeClass('liked');
+                    } else {
+                        // Sinon, ajouter la classe 'liked'
+                        likeButton.addClass('liked');
+                    }
+                } else {
+                    console.error('Erreur lors de la modification du like');
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+    
+
+
 });

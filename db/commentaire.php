@@ -90,6 +90,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 echo json_encode(['success' => true, 'replies' => $replies]);
                 exit();
                 break;
+            case "like_comment":
+                // Gérer l'ajout ou la suppression de like pour un commentaire
+                $commentID = $_POST['commentID'];
+                $action = $_POST['action']; // 'like' pour ajouter un like, 'unlike' pour supprimer un like
+
+                if ($action === 'like') {
+                    // Vérifier si l'utilisateur a déjà liké le commentaire
+                    $stmt = $conn->prepare("SELECT * FROM commentlikes WHERE commentID = ? AND userID = ?");
+                    $stmt->execute([$commentID, $userID]);
+                    $existingLike = $stmt->fetch();
+
+                    if (!$existingLike) {
+                        // Ajouter le like dans la base de données
+                        $stmt = $conn->prepare("INSERT INTO commentlikes (commentID, userID) VALUES (?, ?)");
+                        $stmt->execute([$commentID, $userID]);
+                    }
+                } elseif ($action === 'unlike') {
+                    // Supprimer le like de la base de données
+                    $stmt = $conn->prepare("DELETE FROM commentlikes WHERE commentID = ? AND userID = ?");
+                    $stmt->execute([$commentID, $userID]);
+                }
+
+                // Répondre au client avec succès
+                header('Content-Type: application/json');
+                echo json_encode(['success' => true]);
+                exit();
+                break;
+                
         }
     }
 }
