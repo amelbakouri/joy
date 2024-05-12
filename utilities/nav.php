@@ -1,6 +1,10 @@
 <?php
 require_once 'authentification/auth.php';
 $userID = $_SESSION['id'];
+
+// Récupérer le nom de la page actuelle
+$current_page = basename($_SERVER['PHP_SELF']);
+
 ?>
 
 <body>
@@ -32,18 +36,18 @@ $userID = $_SESSION['id'];
         <!-- Liens à droite -->
         <ul class="navbar-nav ms-auto me-5">
           <li class="nav-item">
-            <a class="nav-link mx-2 pe-2 roboto-medium fs-5" href="/">Accueil</a>
+            <a class="nav-link mx-2 pe-2 roboto-medium fs-5  <?= ($current_page == 'index.php') ? 'color-logo' : ''; ?>" href="/">Accueil</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link mx-2 pe-2 roboto-medium fs-5" href="creer">Créer</a>
+            <a class="nav-link mx-2 pe-2 roboto-medium fs-5 <?= ($current_page == 'creer.php') ? 'color-logo' : ''; ?>" href="creer">Créer</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link mx-2 pe-2 roboto-medium fs-5" href="profil">Profil</a>
+            <a class="nav-link mx-2 pe-2 roboto-medium fs-5 <?= ($current_page == 'profil.php') ? 'color-logo' : ''; ?>" href="profil">Profil</a>
           </li>
           <?php
           if ($_SESSION['role'] == 'moderateur') {
             echo "<li class='nav-item'>
-            <a class='nav-link mx-2 pe-2 roboto-medium fs-5' href='/admin/dashboard'>Dashboard</a>
+            <a class='nav-link mx-2 pe-2 roboto-medium fs-5 ' href='/admin/dashboard'>Dashboard</a>
           </li>";
           }
           ?>

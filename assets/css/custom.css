@@ -4,7 +4,7 @@ a {
 }
 
 body {
-    background-color: #F3DBCE;
+    background-color: #f4e0d5;
 }
 
 .w-10 {
@@ -32,7 +32,7 @@ body {
 }
 
 .bg-light-pink {
-    background-color: #F3DBCE !important;
+    background-color: #f4e0d5 !important;
 }
 
 .color-light-pink {
@@ -47,7 +47,7 @@ body {
     color: #6D6875 !important;
 }
 
-.border-grey{
+.border-grey {
     border-color: #6d687554;
 }
 
