@@ -52,7 +52,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 break;
             case "get_like_count":
                 $postID = $_POST['postID'];
-                $likeCount = requestOne($conn, "SELECT COUNT(*) AS like_count FROM postlikes WHERE postID = $postID")->like_count;
+                $like = requestOne($conn, "SELECT COUNT(*) AS like_count FROM postlikes WHERE postID = $postID");
+                $likeCount = $like['like_count'];
                 // Réponse AJAX au client
                 header('Content-Type: application/json');
                 echo json_encode(['success' => true, 'like_count' => $likeCount]);

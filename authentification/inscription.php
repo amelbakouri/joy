@@ -11,52 +11,54 @@ if (isset($_POST['inscription'])) {
     $password = password_hash($_POST['newPassword'], PASSWORD_DEFAULT);
     $confirmPassword = $_POST['confirmNewPassword'];
 
-    // Vérifier si les mots de passe correspondent
-    if ($_POST['newPassword'] !== $confirmPassword) {
-        echo '<script>alert("Les mots de passe ne correspondent pas."); window.location.href = "/login.php";</script>';
-        exit(); // Arrêter le script
+    // Vérification de l'existence du pseudo et de l'e-mail
+    $pseudoCheck = requestOne($conn, "SELECT COUNT(*) AS count FROM `user` WHERE `pseudo` = '$pseudo'");
+    $emailCheck = requestOne($conn, "SELECT COUNT(*) AS count FROM `user` WHERE `email` = '$email'");
+
+    $pseudoExists = $pseudoCheck['count'] > 0;
+    $emailExists = $emailCheck['count'] > 0;
+
+    if ($pseudoExists || $emailExists) {
+        header('Content-Type: application/json');
+        echo json_encode([
+            'pseudo_exists' => $pseudoExists,
+            'email_exists' => $emailExists
+        ]);
+        exit();
     }
 
-    // Vérifier si le pseudo est déjà pris
-    $existingPseudo = request($conn, "SELECT * FROM user WHERE pseudo = '$pseudo'");
+    // Inscription de l'utilisateur
+    // Données à insérer
+    $data = array(
+        'pseudo' => $pseudo,
+        'name' => $name,
+        'lname' => $lname,
+        'email' => $email,
+        'password' => $password
+    );
 
-    if ($existingPseudo->rowCount() > 0) {
-        echo '<script>alert("Le pseudo est déjà pris."); window.location.href = "/login.php";</script>';
+    // Appel de la fonction insertData
+    insertData($conn, 'user', $data);
+
+    // Récupération de l'utilisateur enregistré
+    $recupUser = request($conn, "SELECT * FROM user WHERE pseudo = '$pseudo'");
+
+    if ($recupUser->rowCount() > 0) {
+        $user = $recupUser->fetch();
+        $_SESSION['pseudo'] = $user['pseudo'];
+        $_SESSION['id'] = $user['id'];
+        $_SESSION['role'] = $user['role'];
+        // Réponse de succès
+        header('Content-Type: application/json');
+        echo json_encode(['success' => true]);
+        exit();
     } else {
-        // Vérifier si l'e-mail existe déjà
-        $existingEmail = request($conn, "SELECT * FROM user WHERE email = '$email'",);
-
-        if ($existingEmail->rowCount() > 0) {
-            echo '<script>alert("L\'e-mail existe déjà."); window.location.href = "/login.php";</script>';
-        } else {
-            // Inscription de l'utilisateur
-            // Données à insérer
-            $data = array(
-                'pseudo' => $pseudo,
-                'name' => $name,
-                'lname' => $lname,
-                'email' => $email,
-                'password' => $password
-            );
-
-            // Appel de la fonction insertData
-            insertData($conn, 'user', $data);
-
-            // Récupération de l'utilisateur enregistré
-            $recupUser = request($conn, "SELECT * FROM user WHERE pseudo = '$pseudo'");
-
-            if ($recupUser->rowCount() > 0) {
-                $user = $recupUser->fetch();
-                $_SESSION['pseudo'] = $user['pseudo'];
-                $_SESSION['id'] = $user['id'];
-                // Redirection vers la page d'accueil
-                header('Location: /');
-                exit(); // Assure que le script s'arrête après la redirection
-            } else {
-                echo '<script>alert("Erreur, veuillez recommencer."); window.location.href = "/login.php";</script>';
-            }
-        }
+        header('Content-Type: application/json');
+        echo json_encode(['success' => false, 'error' => 'Erreur lors de l\'inscription']);
+        exit();
     }
 } else {
-    echo '<script>alert("Erreur, veuillez recommencer."); window.location.href = "/login.php";</script>';
+    header('Content-Type: application/json');
+    echo json_encode(['success' => false, 'error' => 'Erreur de requête']);
+    exit();
 }

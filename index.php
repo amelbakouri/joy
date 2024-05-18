@@ -23,7 +23,8 @@ require_once 'function/post.php';
                 $postDate = $row['postDate'];
 
                 $user_has_liked = userHasLikedPost($conn, $userID, $postID);
-                $like_count = requestOne($conn, "SELECT COUNT(*) AS like_count FROM postlikes WHERE postID = $postID")->like_count;
+                $like = requestOne($conn, "SELECT COUNT(*) AS like_count FROM postlikes WHERE postID = $postID");
+                $like_count = $like['like_count'];
         ?>
                 <div class="card col-12 post bg-light-pink mt-4 rounded-0 ">
                     <div class="card-body p-0 pt-5">
@@ -68,9 +69,9 @@ require_once 'function/post.php';
     </div>
 </div>
 
+<script src="js/post/like.js"></script>
+<script src="js/post/commentaire.js"></script>
+
 <?php
 require_once 'utilities/footer.php';
 ?>
-
-<script src="js/like.js"></script>
-<script src="js/commentaire.js"></script>

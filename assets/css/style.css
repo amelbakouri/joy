@@ -3,6 +3,7 @@
     color: #6D6875 !important;
 }
 
+
 .navbar {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
@@ -157,6 +158,7 @@ input[type="text"]:focus {
     /* Activation de la barre de défilement verticale si nécessaire */
 }
 
+
 .admin {
     height: 100vh;
     /* Hauteur maximale égale à la hauteur de la fenêtre */
@@ -172,4 +174,47 @@ input[type="text"]:focus {
 .replies.replies-visible {
     display: block !important;
     /* Afficher les réponses lorsque la classe replies-visible est présente */
+}
+
+.responsive {
+    display: none;
+}
+
+@media (max-width: 767px) {
+    #sidebar {
+        display: none;
+    }
+
+    #sidebar.active {
+        display: block;
+        background-color: transparent !important;
+        text-align: center;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    #sidebar .sidebar-header {
+        display: none;
+    }
+
+    #registration-infos {
+        background-color: transparent !important;
+    }
+
+    #registration-infos input {
+        background-color: #EFC7BF !important;
+    }
+
+    #login-infos {
+        background-color: transparent !important;
+    }
+
+    #login-infos input {
+        background-color: #EFC7BF !important;
+    }
+}
+
+/* Styles pour supprimer le contour noir du bouton de basculement Bootstrap */
+.navbar-toggler:focus {
+    outline: none;
+    box-shadow: none;
 }

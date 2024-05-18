@@ -45,12 +45,12 @@ require_once 'utilities/header.php';
                             $userID = $post['userID'];
                             $user = requestOne($conn, "SELECT * from user WHERE id = $userID AND user.pseudo LIKE '%$pseudoSearch%'");
                             if ($user) {
-                                $pseudo = $user->pseudo;
+                                $pseudo = $user['pseudo'];
                                 $content =  $row['content'];
                     ?>
 
                                 <tr>
-                                    <td class="bg-light-pink border-grey"><strong><?= $pseudo ?></strong></td>
+                                    <td class="bg-light-pink border-grey"><strong><?= $row['pseudo'] ?></strong></td>
                                     <td class="bg-light-pink border-grey"><?= $row['commentaire'] ?></td>
                                     <td class="bg-light-pink border-grey w-50">
                                         <?php

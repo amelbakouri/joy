@@ -8,8 +8,7 @@ require_once 'utilities/nav.php';
         <div class="card-body">
             <h4 class="mb-4 text-center">Un problème ? Contactez nous</h4>
 
-            <!-- à faire : action="" -->
-            <form id="contactForm" action=".php" method="post">
+            <form id="contactForm" action="contact.php" method="post">
                 <div class="row mb-4">
                     <div class="col-sm-6">
                         <div class="form-group">

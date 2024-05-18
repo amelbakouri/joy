@@ -70,7 +70,8 @@ require_once dirname(__DIR__) . '/function/post.php';
 </div>
 </div>
 
+<script src="/js/post/commentaire.js"></script>
+
 </body>
 
 </html>
-<script src="/js/commentaire.js"></script>

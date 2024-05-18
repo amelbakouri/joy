@@ -12,11 +12,11 @@ $current_page = basename($_SERVER['PHP_SELF']);
   <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
       <!-- Logo -->
-      <a class="navbar-brand ms-5" href="/"><img id="logo" src="assets/img/logo.png" alt="logo joy" draggable="false" height="80" /></a>
+      <a class="navbar-brand ms-lg-5" href="/"><img id="logo" src="assets/img/logo.png" alt="logo joy" draggable="false" height="70" /></a>
 
       <!-- Bouton de basculement pour la navigation mobile -->
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="custom-icon"><i class="fa-solid fa-bars fs-1 color-logo"></i></span>
       </button>
 
       <!-- Contenu de la barre de navigation -->
@@ -34,7 +34,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
 
         <!-- Liens à droite -->
-        <ul class="navbar-nav ms-auto me-5">
+        <ul class="navbar-nav ms-auto">
           <li class="nav-item">
             <a class="nav-link mx-2 pe-2 roboto-medium fs-5  <?= ($current_page == 'index.php') ? 'color-logo' : ''; ?>" href="/">Accueil</a>
           </li>

@@ -191,7 +191,7 @@ $(document).ready(function () {
                             '<div class="d-flex soupe ">' +
                             '<p class="pseudo fw-bold m-0 p-0">' + comment.pseudo + ': &nbsp </p>' +
                             '<p class="commentaire m-0 p-0 w-50">' + comment.commentaire + '</p>' +
-                            '<button type="button" class="btn p-0 icon-post border-0 like-button"> <i class="fas fa-heart"></i>' +
+                            '<button type="button" class="btn d-none p-0 icon-post border-0 like-button"> <i class="fas fa-heart"></i>' +
                             '</div>' +
                             '<div class="d-flex text-center">' +
                             '<p class="temps-ecoule p-0 m-0">' + comment.tempsEcoule + '</p>' +

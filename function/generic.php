@@ -9,8 +9,8 @@ function requestOne($conn, $request)
 
         // Vérifie si l'exécution de la requête a réussi et si c'est une requête SELECT
         if ($pdo_request->execute() && strtolower(substr($request, 0, 6)) == "select") {
-            // Récupère la première ligne de résultat sous forme d'objet PDO
-            $resultData = $pdo_request->fetch(PDO::FETCH_OBJ);
+            // Récupère la première ligne de résultat sous forme de tableau associatif
+            $resultData = $pdo_request->fetch(PDO::FETCH_ASSOC);
             return $resultData;
         } else {
             // Si ce n'est pas une requête SELECT ou s'il y a une erreur, retourne le code d'erreur PDO
@@ -21,6 +21,7 @@ function requestOne($conn, $request)
         return "DB :: Merci de vérifier l'accès à votre base de données.";
     }
 }
+
 
 function request($conn, $request)
 {
@@ -36,9 +37,6 @@ function request($conn, $request)
         } elseif (strtolower(substr($request, 0, 6)) == "insert") {
             // Retourne l'ID généré par la dernière opération d'INSERT dans la connexion
             return $conn->lastInsertId();
-        } elseif (strtolower(substr($request, 0, 6)) == "update") {
-            // Retourne le nombre de lignes affectées par la requête UPDATE
-            return $pdo_request->rowCount();
         } else {
             // Si ce n'est pas un SELECT, INSERT ou UPDATE ou s'il y a une erreur, retourne le code d'erreur PDO
             return $pdo_request->errorCode() != "00000";
@@ -49,7 +47,6 @@ function request($conn, $request)
     }
 }
 
-// Fonction d'insertion générique
 function insertData($conn, $table, $data)
 {
 
@@ -72,6 +69,40 @@ function insertData($conn, $table, $data)
         return false; // Retourne faux si l'exécution échoue
     }
 }
+
+function update($conn, $table, $data, $conditions)
+{
+    // Fonction pour générer les paires clé-valeur pour les SET et les conditions
+    $generateParts = function($items, $prefix = '') {
+        return implode(', ', array_map(function($key) use ($prefix) {
+            return "`$key` = :$prefix$key";
+        }, array_keys($items)));
+    };
+
+    // Création des chaînes SET et WHERE
+    $setString = $generateParts($data);
+    $conditionString = $generateParts($conditions, 'cond_');
+
+    // Préparation de la requête
+    $query = "UPDATE `$table` SET $setString WHERE $conditionString";
+    $stmt = $conn->prepare($query);
+
+    // Fonction pour lier les paramètres
+    $bindParams = function($stmt, $items, $prefix = '') {
+        foreach ($items as $key => &$value) {
+            $stmt->bindParam(":$prefix$key", $value);
+        }
+    };
+
+    // Liaison des paramètres
+    $bindParams($stmt, $data);
+    $bindParams($stmt, $conditions, 'cond_');
+
+    // Exécution de la requête
+    return $stmt->execute() ? $stmt->rowCount() : false;
+}
+
+
 
 // Fonction de redirection
 function redirectTo($location)

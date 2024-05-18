@@ -56,7 +56,8 @@ require_once 'utilities/header.php';
 </div>
 </div>
 
+<script src="/js/post/commentaire.js"></script>
+
 </body>
 
 </html>
-<script src="/js/commentaire.js"></script>

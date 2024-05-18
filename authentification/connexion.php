@@ -3,12 +3,18 @@ session_start();
 require_once dirname(__DIR__) . '/function/generic.php';
 require_once dirname(__DIR__) . '/config/connexion.php';
 
+header('Content-Type: application/json');
+
+$response = [
+    'success' => false,
+    'message' => 'Erreur lors de la soumission du formulaire'
+];
+
 if (isset($_POST['connexion'])) {
-    if (!empty($_POST['loginPseudo']) and !empty($_POST['loginPassword'])) {
+    if (!empty($_POST['loginPseudo']) && !empty($_POST['loginPassword'])) {
         $pseudo = htmlspecialchars($_POST['loginPseudo']);
         $password = $_POST['loginPassword'];
         $recupUser = request($conn, "SELECT * FROM user WHERE pseudo = '$pseudo'");
-
 
         if ($recupUser->rowCount() > 0) {
             $user = $recupUser->fetch();
@@ -18,24 +24,25 @@ if (isset($_POST['connexion'])) {
                 $_SESSION['id'] = $user['id'];
                 $_SESSION['role'] = $user['role'];
 
-
-                // Vérification du rôle pour l'accès à la page d'administration
+                $response['success'] = true;
                 if ($_SESSION['role'] == 'moderateur') {
                     // Redirection vers la page d'administration
-                    redirectTo('/admin/dashboard');
+                    $response['redirect'] = '/admin/dashboard';
                 } else {
                     // Redirection vers la page d'accueil
-                    redirectTo('/');
+                    $response['redirect'] = '/';
                 }
             } else {
-                echo 'Votre mot de passe est incorrect';
+                $response['message'] = 'Le pseudo ou le mot de passe est incorrect.';
             }
         } else {
-            echo 'Aucun utilisateur trouvé avec ce pseudo';
+            $response['message'] = 'Le pseudo ou le mot de passe est incorrect.';
         }
     } else {
-        echo 'Veuillez remplir tous les champs';
+        $response['message'] = 'Veuillez remplir tous les champs.';
     }
 } else {
-    echo 'Erreur lors de la soumission du formulaire';
+    $response['message'] = 'Erreur lors de la soumission du formulaire.';
 }
+
+echo json_encode($response);
