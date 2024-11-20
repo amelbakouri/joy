@@ -3,9 +3,9 @@
 // Informations de connexion
 
 $_ENV["sqlConnector"] = array(
-    "dbHost" => "localhost",
-    "dbUser" => "root",
+    "dbHost" => "",
+    "dbUser" => "",
     "dbPass" => '',
-    "dbName" => "joy",
+    "dbName" => "",
     "dbDriver" => "mysql"
 );
